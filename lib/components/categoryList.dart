@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/categrory.dart'; // Corrected the file path
+import '../data/categrory.dart'; //
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});

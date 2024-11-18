@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/categrory.dart'; // Corrected the file path
+import '../data/categrory.dart'; //
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});
@@ -23,8 +23,8 @@ class CategoryList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35),
                       child: Image.asset(
                         category['image'],
-                        width: 70, // Set the width of the image
-                        height: 70, // Set the height of the image
+                        width: 70,
+                        height: 70,
                         fit: BoxFit.cover,
                       ),
                     ),

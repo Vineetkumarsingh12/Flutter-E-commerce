@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/Product_card.dart';
+import '../services/api_service.dart';
 
 // Dummy product data to simulate API response
 final List<Map<String, dynamic>> dummyProductData = [
@@ -33,10 +34,50 @@ final List<Map<String, dynamic>> dummyProductData = [
   },
 ];
 
-class ProductPage extends StatelessWidget {
-  const ProductPage({super.key});
+
+
+class ProductPage extends StatefulWidget {
+   ProductPage({super.key});
 
   @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+   // String data = 'Loading...';
+   //
+   // Future<void> fetchData() async {
+   //   try {
+   //
+   //     final ApiService apiService = ApiService(baseUrl: 'https://jsonplaceholder.typicode.com');
+   //     final response = await apiService.request(
+   //       endpoint: '/posts/1', // The API endpoint
+   //       method: 'GET',        // HTTP method
+   //     );
+   //
+   //     // Update the state with the fetched data
+   //     print(response);
+   //
+   //     setState(() {
+   //       data = response['title'];
+   //     });
+   //   } catch (e) {
+   //     print(e);
+   //     setState(() {
+   //       data = 'Error: $e';
+   //     });
+   //   }
+   // }
+
+
+
+   // @override
+   // void initState() {
+   //   super.initState();
+   //   fetchData();
+   // }
+
+   @override
   Widget build(BuildContext context) {
     // Wrapping in an Expanded to allow GridView to take flexible space
     return Padding(

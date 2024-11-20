@@ -15,6 +15,13 @@ List<Map<String, dynamic>> categories= [
   'image': 'assets/images/cat_4.png',
   'title': "jewelery",
  },
-
+ {
+  'image': 'assets/images/cat_5.png',
+  'title': 'Category 5',
+ },
+ {
+  'image': 'assets/images/cat_6.png',
+  'title': 'Category 6',
+ },
 ];
 

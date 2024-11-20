@@ -11,40 +11,40 @@ class CategoryList extends StatefulWidget {
 
 class _CategoryListState extends State<CategoryList> {
 
-  String data = 'Loading...';
-
-  Future<void> fetchData() async {
-    try {
-
-      final ApiService apiService = ApiService(baseUrl: 'https://fakestoreapi.com/products');
-      final response = await apiService.request(
-        endpoint: '/categories', // The API endpoint
-        method: 'GET',        // HTTP method
-      );
-
-      // Update the state with the fetched data
-      print("*****");
-      print(response);
-
-      // setState(() {
-      //   data = response['title'];
-      // });
-
-    } catch (e) {
-      print(e);
-      setState(() {
-        data = 'Error: $e';
-      });
-    }
-  }
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  // String data = 'Loading...';
+  //
+  // Future<void> fetchData() async {
+  //   try {
+  //
+  //     final ApiService apiService = ApiService(baseUrl: 'https://fakestoreapi.com/products');
+  //     final response = await apiService.request(
+  //       endpoint: '/categories', // The API endpoint
+  //       method: 'GET',        // HTTP method
+  //     );
+  //
+  //     // Update the state with the fetched data
+  //     print("*****");
+  //     print(response);
+  //
+  //     // setState(() {
+  //     //   data = response['title'];
+  //     // });
+  //
+  //   } catch (e) {
+  //     print(e);
+  //     setState(() {
+  //       data = 'Error: $e';
+  //     });
+  //   }
+  // }
+  //
+  //
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchData();
+  // }
 
   @override
   Widget build(BuildContext context) {

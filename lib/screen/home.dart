@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            ProductPage(), // Use the corrected ProductPage
+            ProductPage(endpoint: "/products"), // Use the corrected ProductPage
           ],
         ),
       ),

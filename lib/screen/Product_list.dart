@@ -64,9 +64,13 @@ class _ProductPageState extends State<ProductPage> {
 
 
       final jsonList = response;
+
+      ///     reserach
       Logger logger = Logger(
         printer: PrettyPrinter(methodCount: 0, colors: true)
       );
+
+
       logger.i('DUMMY: $jsonList' );
 
       setState(() {

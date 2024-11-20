@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/categrory.dart';
-import '../services/api_service.dart'; //
+import '../screen/Product_list.dart';
+import '../screen/categoryPage.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({super.key});
@@ -10,42 +11,6 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
-
-  // String data = 'Loading...';
-  //
-  // Future<void> fetchData() async {
-  //   try {
-  //
-  //     final ApiService apiService = ApiService(baseUrl: 'https://fakestoreapi.com/products');
-  //     final response = await apiService.request(
-  //       endpoint: '/categories', // The API endpoint
-  //       method: 'GET',        // HTTP method
-  //     );
-  //
-  //     // Update the state with the fetched data
-  //     print("*****");
-  //     print(response);
-  //
-  //     // setState(() {
-  //     //   data = response['title'];
-  //     // });
-  //
-  //   } catch (e) {
-  //     print(e);
-  //     setState(() {
-  //       data = 'Error: $e';
-  //     });
-  //   }
-  // }
-  //
-  //
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchData();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -53,21 +18,37 @@ class _CategoryListState extends State<CategoryList> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+
+
           children: categories.map((category) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 children: [
-                  Card(
-                    shape: const CircleBorder(),
-                    elevation: 5,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(35),
-                      child: Image.asset(
-                        category['image'],
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,
+                  GestureDetector( // Use GestureDetector for card taps
+                    onTap: () {
+                      // Navigate to the CategoryPage when the card is tapped
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>categoryPage(
+                            endpoint: category['endpoint'],
+                            title:category['title'],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      shape: const CircleBorder(),
+                      elevation: 5,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(35),
+                        child: Image.asset(
+                          category['image'],
+                          width: 70,
+                          height: 70,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

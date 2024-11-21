@@ -30,8 +30,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context);
-    final cartCount = cartProvider.cart[id] ?? 0; // Use the item count from provider
 
     return Card(
       elevation: 4.0,

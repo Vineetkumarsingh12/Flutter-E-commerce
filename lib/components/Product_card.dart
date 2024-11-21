@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
+  final int id;
   final String image;
   final String title;
   final String description;
@@ -13,6 +14,7 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({
     super.key,
+    required this.id,
     required this.image,
     required this.title,
     required this.description,

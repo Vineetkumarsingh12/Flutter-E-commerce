@@ -1,13 +1,8 @@
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:ecommerce/providers/cart.dart';
-
-import 'cartIncrementDecrement.dart';
 
 // ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
-  final int id;
   final String image;
   final String title;
   final String description;
@@ -25,12 +20,10 @@ class ProductCard extends StatelessWidget {
     required this.rating,
     required this.isLiked,
     required this.onLikeToggle,
-    required this.id,
   });
 
   @override
   Widget build(BuildContext context) {
-
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -45,17 +38,13 @@ class ProductCard extends StatelessWidget {
               // Product Image with reduced height
               AspectRatio(
                 aspectRatio: 1.2, // Adjusted aspect ratio to make it less tall
-                child: Container(
-                  color: Colors.white,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                  
-                    child: Image.network(
-                      image,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => const Center(
-                        child: Icon(Icons.error),
-                      ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Center(
+                      child: Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -74,9 +63,6 @@ class ProductCard extends StatelessWidget {
                   iconSize: 24, // Adjust icon size if needed
                 ),
               ),
-
-              CartIncrementDecrement(id:id),
-
             ],
           ),
           // Product Details - compacted layout

@@ -1,10 +1,16 @@
+import 'package:ecommerce/providers/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Get the cart count from the CartProvider
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartCount = cartProvider.cart.length; // Assuming `cart` is a List
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: Row(
@@ -22,9 +28,7 @@ class NavBar extends StatelessWidget {
                 ),
               ),
               child: Focus(
-                onFocusChange: (hasFocus) {
-
-                },
+                onFocusChange: (hasFocus) {},
                 child: TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Search...',
@@ -51,19 +55,42 @@ class NavBar extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          // Cart Icon with rounded grey background
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[200], // Light grey background color
-              shape: BoxShape.circle, // Make it rounded
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.shopping_cart, color: Colors.black),
-              onPressed: () {
-                // Handle cart button tap here
-              },
-            ),
+          // Cart Icon with cart number badge
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200], // Light grey background color
+                  shape: BoxShape.circle, // Make it rounded
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.shopping_cart, color: Colors.black),
+                  onPressed: () {
+                    // Handle cart button tap here
+                  },
+                ),
+              ),
+              // Cart number badge
+              if (cartCount > 0) // Only show if there's something in the cart
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: CircleAvatar(
+                    radius: 10, // Small badge size
+                    backgroundColor: Colors.black,
+                    child: Text(
+                      '$cartCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12, // Smaller font size for badge
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),

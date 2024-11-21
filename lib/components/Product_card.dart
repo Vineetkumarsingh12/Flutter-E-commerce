@@ -1,7 +1,9 @@
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
 
-// ProductCard widget to display a single product's details
+import 'cartIncrementDecrement.dart';
+
+
 class ProductCard extends StatelessWidget {
   final int id;
   final String image;
@@ -34,24 +36,29 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Stack to overlay the like button on top of the product image
+          
           Stack(
             children: [
-              // Product Image with reduced height
+              
               AspectRatio(
-                aspectRatio: 1.2, // Adjusted aspect ratio to make it less tall
+                aspectRatio: 1.2, 
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Icon(Icons.error),
+                  child: Container(
+                    color: Colors.white,
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => const Center(
+                        child: Icon(Icons.error),
+                      ),
                     ),
                   ),
                 ),
               ),
-              // Positioned like button at the top-right corner
+
+              CartIncrementDecrement(id:id),
+              
               Positioned(
                 top: 8,
                 right: 8,
@@ -61,70 +68,70 @@ class ProductCard extends StatelessWidget {
                     color: isLiked ? Colors.red : Colors.white,
                   ),
                   onPressed: onLikeToggle,
-                  splashRadius: 20, // Adjust splash radius if needed
-                  iconSize: 24, // Adjust icon size if needed
+                  splashRadius: 20, 
+                  iconSize: 24, 
                 ),
               ),
             ],
           ),
-          // Product Details - compacted layout
+          
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Product Title
+              
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 6, 8, 4), // Reduced padding
+                padding: const EdgeInsets.fromLTRB(8, 6, 8, 4), 
                 child: Text(
                   title,
-                  maxLines: 1, // Show only one line of title
+                  maxLines: 1, 
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 15, // Slightly smaller font size
+                    fontSize: 15, 
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              // Product Description
+              
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   description,
-                  maxLines: 1, // Show only one line for description to save space
-                  overflow: TextOverflow.ellipsis, // Add ellipsis if text is too long
+                  maxLines: 1, 
+                  overflow: TextOverflow.ellipsis, 
                   style: const TextStyle(
-                    fontSize: 13, // Smaller font size for description
+                    fontSize: 13, 
                     color: Colors.grey,
                   ),
                 ),
               ),
-              // Price and Rating Row
+              
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Reduced vertical padding
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), 
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Product Price
+                    
                     Text(
                       '\₹${price.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        fontSize: 15, // Slightly smaller font size
+                        fontSize: 15, 
                         fontWeight: FontWeight.bold,
                         color: Colors.blueAccent,
                       ),
                     ),
-                    // Product Rating
+                    
                     Row(
                       children: [
                         const Icon(
                           Icons.star,
                           color: Colors.amber,
-                          size: 14, // Slightly smaller star icon
+                          size: 14, 
                         ),
-                        const SizedBox(width: 2), // Reduced spacing
+                        const SizedBox(width: 2), 
                         Text(
                           '${rating.rate} (${rating.count})',
                           style: const TextStyle(
-                            fontSize: 13, // Smaller font size
+                            fontSize: 13, 
                             color: Colors.grey,
                           ),
                         ),

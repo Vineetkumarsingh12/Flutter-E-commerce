@@ -38,13 +38,17 @@ class ProductCard extends StatelessWidget {
               // Product Image with reduced height
               AspectRatio(
                 aspectRatio: 1.2, // Adjusted aspect ratio to make it less tall
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Icon(Icons.error),
+                child: Container(
+                  color: Colors.white,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => const Center(
+                        child: Icon(Icons.error),
+                      ),
                     ),
                   ),
                 ),

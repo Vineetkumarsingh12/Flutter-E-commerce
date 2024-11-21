@@ -64,9 +64,13 @@ class _ProductPageState extends State<ProductPage> {
 
 
       final jsonList = response;
+
+      ///     reserach
       Logger logger = Logger(
         printer: PrettyPrinter(methodCount: 0, colors: true)
       );
+
+
       logger.i('DUMMY: $jsonList' );
 
       setState(() {
@@ -105,7 +109,7 @@ class _ProductPageState extends State<ProductPage> {
                 crossAxisCount: 2, // Number of items per row
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 0.77, // Adjust to control height/width ratio
+                childAspectRatio: 0.75, // Adjust to control height/width ratio
               ),
               itemCount: productData.length,
               itemBuilder: (context, index) {

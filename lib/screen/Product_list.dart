@@ -111,6 +111,7 @@ class _ProductPageState extends State<ProductPage> {
               itemBuilder: (context, index) {
                 final product = productData[index];
                 return ProductCard(
+                  id: product.id,
                   image: product.image,
                   title: product.title,
                   description: product.description,

@@ -1,8 +1,11 @@
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/providers/cart.dart';
 
 // ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
+  final int id;
   final String image;
   final String title;
   final String description;
@@ -20,10 +23,14 @@ class ProductCard extends StatelessWidget {
     required this.rating,
     required this.isLiked,
     required this.onLikeToggle,
+    required this.id,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartCount = cartProvider.cart[id] ?? 0; // Use the item count from provider
+
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -61,6 +68,64 @@ class ProductCard extends StatelessWidget {
                   onPressed: onLikeToggle,
                   splashRadius: 20, // Adjust splash radius if needed
                   iconSize: 24, // Adjust icon size if needed
+                ),
+              ),
+              // Positioned cart controls at the bottom-right corner
+              Positioned(
+                top: 2,
+                left: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16.0),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Row(
+                    children: [
+                      // Decrement Button
+                      IconButton(
+                        onPressed: () {
+                          cartProvider.removeFromCart(id: id);
+                        },
+                        icon: const Icon(Icons.remove, color: Colors.black),
+                        splashRadius: 20,
+                        iconSize: 20,
+                      ),
+                      // Vertical Separator
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: Colors.grey.shade300,
+                      ),
+                      // Item Count Display
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          '$cartCount',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      // Vertical Separator
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: Colors.grey.shade300,
+                      ),
+                      // Increment Button
+                      IconButton(
+                        onPressed: () {
+                          cartProvider.addToCart(id: id);
+                        },
+                        icon: const Icon(Icons.add, color: Colors.black),
+                        splashRadius: 20,
+                        iconSize: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

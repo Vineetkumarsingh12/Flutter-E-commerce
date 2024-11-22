@@ -5,9 +5,10 @@ import 'package:ecommerce/data/model/product.dart';
 
 import '../screen/Product_details.dart';
 
+import '../screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
 
-
+// ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
   final int id;
   final String image;
@@ -19,6 +20,7 @@ class ProductCard extends StatelessWidget {
   final VoidCallback onLikeToggle;
 
   const ProductCard({
+
     super.key,
     required this.id,
     required this.image,

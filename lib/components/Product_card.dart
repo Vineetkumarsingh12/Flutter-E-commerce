@@ -1,8 +1,12 @@
-import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce/data/model/product.dart';
 
-// ProductCard widget to display a single product's details
+import '../screen/Product_details.dart';
+
+
+
 class ProductCard extends StatelessWidget {
+  final int id;
   final String image;
   final String title;
   final String description;
@@ -13,6 +17,7 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({
     super.key,
+    required this.id,
     required this.image,
     required this.title,
     required this.description,
@@ -24,120 +29,129 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Stack to overlay the like button on top of the product image
-          Stack(
-            children: [
-              // Product Image with reduced height
-              AspectRatio(
-                aspectRatio: 1.2, // Adjusted aspect ratio to make it less tall
-                child: Container(
-                  color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the product details page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+              id: id,
+              image: image,
+              title: title,
+              description: description,
+              price: price,
+              rating: rating,
+              isLiked: isLiked,
+            ),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.2,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                  
-                    child: Image.network(
-                      image,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => const Center(
-                        child: Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // Positioned like button at the top-right corner
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? Colors.red : Colors.white,
-                  ),
-                  onPressed: onLikeToggle,
-                  splashRadius: 20, // Adjust splash radius if needed
-                  iconSize: 24, // Adjust icon size if needed
-                ),
-              ),
-            ],
-          ),
-          // Product Details - compacted layout
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Product Title
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 6, 8, 4), // Reduced padding
-                child: Text(
-                  title,
-                  maxLines: 1, // Show only one line of title
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 15, // Slightly smaller font size
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              // Product Description
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  description,
-                  maxLines: 1, // Show only one line for description to save space
-                  overflow: TextOverflow.ellipsis, // Add ellipsis if text is too long
-                  style: const TextStyle(
-                    fontSize: 13, // Smaller font size for description
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              // Price and Rating Row
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Reduced vertical padding
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Product Price
-                    Text(
-                      '\₹${price.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 15, // Slightly smaller font size
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                    // Product Rating
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 14, // Slightly smaller star icon
+                    child: Container(
+                      color: Colors.white,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) => const Center(
+                          child: Icon(Icons.error),
                         ),
-                        const SizedBox(width: 2), // Reduced spacing
-                        Text(
-                          '${rating.rate} (${rating.count})',
-                          style: const TextStyle(
-                            fontSize: 13, // Smaller font size
-                            color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton(
+                    icon: Icon(
+                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked ? Colors.red : Colors.white,
+                    ),
+                    onPressed: onLikeToggle,
+                    splashRadius: 20,
+                    iconSize: 24,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 6, 8, 4),
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\₹${price.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 14,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 2),
+                          Text(
+                            '${rating.rate} (${rating.count})',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

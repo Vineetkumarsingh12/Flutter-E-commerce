@@ -153,6 +153,16 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
+
+            Padding(
+              padding: const EdgeInsets.only(top:3,bottom: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CartIncrementDecrement(id:id),
+                ],
+              ),
+            ),
           ],
         ),
       ),

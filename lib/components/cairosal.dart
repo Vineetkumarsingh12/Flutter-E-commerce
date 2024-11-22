@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ImageCarousel extends StatefulWidget {
-  const ImageCarousel({super.key});
+
+  const ImageCarousel({super.key,required this.imageList});
+
+  final List<String> imageList;
 
   @override
   State<ImageCarousel> createState() => _ImageCarouselState();
@@ -10,13 +13,7 @@ class ImageCarousel extends StatefulWidget {
 
 class _ImageCarouselState extends State<ImageCarousel> {
   // List of image paths or URLs
-  final List<String> imageList = [
-   'assets/images/img_4.png',
-    'assets/images/img_3.png',
-    'assets/images/img_2.png',
-    'assets/images/img_1.png',
-    'assets/images/img.png',
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
             viewportFraction: 0.6, // Fraction of the page to show
             autoPlayInterval: const Duration(seconds: 3), // Interval between auto-scroll
           ),
-          items: imageList.map((imagePath) {
+          items: widget.imageList.map((imagePath) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -46,9 +43,9 @@ class _ImageCarouselState extends State<ImageCarousel> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: Image.asset(
+                    child: Image.network(
                       imagePath,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 );

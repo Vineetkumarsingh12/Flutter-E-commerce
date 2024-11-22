@@ -38,7 +38,6 @@ dependencies:
   carousel_slider: ^5.0.0
   http: ^1.2.2
   logger: ^2.5.0
-  flutter_rating: ^2.0.2
   provider: ^6.1.2
   flutter_rating: ^2.0.2
 
@@ -59,11 +58,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/images/img.png
-    - assets/images/img_1.png
-    - assets/images/img_2.png
-    - assets/images/img_3.png
-    - assets/images/img_4.png
     - assets/images/cat_1.png
     - assets/images/cat_2.png
     - assets/images/cat_3.png

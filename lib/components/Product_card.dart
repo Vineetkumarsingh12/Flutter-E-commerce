@@ -1,15 +1,8 @@
 import 'package:ecommerce/data/model/product.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/data/model/product.dart';
 
-import '../screen/Product_details.dart';
-
-import 'cartIncrementDecrement.dart';
-
-
+// ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
-  final int id;
   final String image;
   final String title;
   final String description;
@@ -20,7 +13,6 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({
     super.key,
-    required this.id,
     required this.image,
     required this.title,
     required this.description,

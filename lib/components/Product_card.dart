@@ -1,4 +1,5 @@
 import 'package:ecommerce/data/model/product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cartIncrementDecrement.dart';
@@ -57,6 +58,24 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
 
+              Positioned(
+                right: 0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size(0, 0),
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
+                  onPressed: onLikeToggle,
+                  child: Icon(
+                    isLiked ? Icons.favorite : Icons.favorite_border,
+                    color: isLiked ? Colors.red : Colors.white,
+                    size: 24,  // Set the icon size
+                  ),
+                ),
+              )
 
               
 
@@ -67,32 +86,7 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              Padding(
-                padding: const EdgeInsets.only(top:3,right: 2 , left:2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CartIncrementDecrement(id:id),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size(0, 0),
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                      ),
-                      onPressed: onLikeToggle,
-                      child: Icon(
-                        isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: isLiked ? Colors.red : Colors.white,
-                        size: 24,  // Set the icon size
-                      ),
-                    )
 
-
-                  ],
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
                 child: Text(
@@ -156,7 +150,18 @@ class ProductCard extends StatelessWidget {
               ),
             ],
           ),
+
+          Padding(
+            padding: const EdgeInsets.only(top:3,bottom: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CartIncrementDecrement(id:id),
+              ],
+            ),
+          ),
         ],
+
       ),
     );
   }

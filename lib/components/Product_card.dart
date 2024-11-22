@@ -57,30 +57,44 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
 
-              CartIncrementDecrement(id:id),
+
               
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? Colors.red : Colors.white,
-                  ),
-                  onPressed: onLikeToggle,
-                  splashRadius: 20, 
-                  iconSize: 24, 
-                ),
-              ),
+
             ],
           ),
           
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 6, 8, 4), 
+                padding: const EdgeInsets.only(top:3,right: 2 , left:2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CartIncrementDecrement(id:id),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size(0, 0),
+                        shape: CircleBorder(),
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                      ),
+                      onPressed: onLikeToggle,
+                      child: Icon(
+                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: isLiked ? Colors.red : Colors.white,
+                        size: 24,  // Set the icon size
+                      ),
+                    )
+
+
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
                 child: Text(
                   title,
                   maxLines: 1, 

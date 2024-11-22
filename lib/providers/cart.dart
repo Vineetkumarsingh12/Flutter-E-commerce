@@ -32,4 +32,10 @@ class CartProvider extends ChangeNotifier {
       }
     }
   }
+
+
+  void updateCart({ required int id, required int count}){
+    cart[id]=count;
+    notifyListeners();
+  }
 }

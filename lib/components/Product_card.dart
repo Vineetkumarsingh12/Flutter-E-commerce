@@ -8,6 +8,9 @@ import '../screen/Product_details.dart';
 import '../screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
 
+import '../screen/Product_details.dart';
+import 'cartIncrementDecrement.dart';
+
 // ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
   final int id;

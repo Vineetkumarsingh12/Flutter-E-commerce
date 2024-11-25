@@ -1,3 +1,4 @@
+import 'package:ecommerce/components/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart.dart';
@@ -15,6 +16,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   int previousValidCount = 0;
+  static const int maxCount = 10000; // Maximum count
 
   @override
   void initState() {
@@ -43,17 +45,12 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final newCount = int.tryParse(_controller.text);
 
-    // If the entered value is invalid, show a SnackBar and reset the value
+    // If the entered value is invalid or exceeds limits
     if (newCount == null || newCount < 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Invalid value! Resetting to previous valid count.',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
+      showSnackBar(context,'Invalid value! Resetting to previous valid count.');
+      _controller.text = previousValidCount.toString();
+    } else if (newCount > maxCount) {
+      showSnackBar(context,'Value too large! Enter a value less than $maxCount.');
       _controller.text = previousValidCount.toString();
     } else {
       // If the value is valid, update the cart and save the new valid count
@@ -61,6 +58,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
       previousValidCount = newCount;
     }
   }
+
 
 
   @override
@@ -127,9 +125,12 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
               onChanged: (value) {
                 // Try to parse the value and update cart count if valid
                 int? newCount = int.tryParse(value);
-                if (newCount != null && newCount >= 0) {
+                if (newCount != null && newCount >= 0 && newCount <= maxCount) {
                   cartProvider.updateCart(id: widget.id, count: newCount);
                   previousValidCount = newCount;
+                } else if (newCount != null && newCount > maxCount) {
+                  showSnackBar(context,'Value too large! Maximum is $maxCount.');
+                  _controller.text = previousValidCount.toString();
                 }
               },
               // Trigger when "Enter" is pressed
@@ -152,7 +153,11 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
             height: 24,
             child: IconButton(
               onPressed: () {
-                cartProvider.addToCart(id: widget.id);
+                if (cartCount < maxCount) {
+                  cartProvider.addToCart(id: widget.id);
+                } else {
+                  showSnackBar(context,'Cannot exceed maximum count of $maxCount.');
+                }
               },
               icon: const Icon(Icons.add, color: Colors.black),
               splashRadius: 15,

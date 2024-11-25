@@ -204,7 +204,7 @@ class ProductDetailsPage extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       Text(
-                        '\$${price.toStringAsFixed(2)}',
+                        '\₹${price.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

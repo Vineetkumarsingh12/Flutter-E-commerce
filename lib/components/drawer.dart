@@ -10,32 +10,33 @@ class customDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           Container(
-            height: 300,
+            height: 400,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.red[700],
+                color: Colors.pink[700],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(35),
+                    // borderRadius: BorderRadius.circular(200),
                     child: Image.asset(
                       'assets/images/company_logo.png',
                       fit: BoxFit.contain,
-                      height: 100,
+                      height: 200,
+                      width: 200,
                     ),
                   ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.person, color: Colors.grey),
+                      Icon(Icons.person, color: Colors.white),
                       SizedBox(width: 8),
                       Text(
                         "Vineet Singh",
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.white,
                           fontSize: 24.0,
                         ),
                       ),
@@ -45,12 +46,12 @@ class customDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.phone, color: Colors.grey),
+                      Icon(Icons.phone, color: Colors.white),
                       SizedBox(width: 8),
                       Text(
                         "75555555555",
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.white,
                         ),
                       ),
                     ],
@@ -59,12 +60,12 @@ class customDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.email, color: Colors.grey),
+                      Icon(Icons.email, color: Colors.white),
                       SizedBox(width: 8),
                       Text(
                         "vineet@gmail.com",
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.white,
                         ),
                       ),
                     ],

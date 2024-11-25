@@ -13,7 +13,7 @@ class customDrawer extends StatelessWidget {
             height: 400,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.pink[700],
+                color: Colors.purple[500],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,13 +31,13 @@ class customDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.person, color: Colors.white),
+                      Icon(Icons.person, color: Colors.black,size: 30,),
                       SizedBox(width: 8),
                       Text(
                         "Vineet Singh",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
+                          color: Colors.black,
+                          fontSize: 30.0,
                         ),
                       ),
                     ],
@@ -46,12 +46,12 @@ class customDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.phone, color: Colors.white),
+                      Icon(Icons.phone, color: Colors.black),
                       SizedBox(width: 8),
                       Text(
                         "75555555555",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -60,12 +60,12 @@ class customDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.email, color: Colors.white),
+                      Icon(Icons.email, color: Colors.black),
                       SizedBox(width: 8),
                       Text(
                         "vineet@gmail.com",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ],

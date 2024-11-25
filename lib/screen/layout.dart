@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+import '../components/drawer.dart';
 import 'home.dart';
 
 class Layout extends StatefulWidget {
@@ -27,6 +28,7 @@ class _LayoutPageState extends State<Layout> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,43 +36,31 @@ class _LayoutPageState extends State<Layout> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Welcome",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-
-                ),
-
+            Text(
+              "Welcome",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Text("Our E-commerce App",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                )),
+            Text(
+              "Our E-commerce App",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            ),
           ],
-        )
-
+        ),
       ),
+      endDrawer:customDrawer() , // Use custom Drawer here
       body: _pages[_currentIndex],
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(20), // Rounded corners
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: Colors.black.withOpacity(0.2), // Subtle shadow
-        //       blurRadius: 10,
-        //       offset: const Offset(0, 4), // Shadow position
-        //     ),
-        //   ],
-        // ),
-
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20), // Ensures rounded corners
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0), // Blur effect
             child: Container(
-
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.2), // Semi-transparent white
                 borderRadius: BorderRadius.circular(20),

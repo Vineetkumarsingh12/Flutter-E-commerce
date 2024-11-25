@@ -7,7 +7,7 @@ import 'package:flutter_rating/flutter_rating.dart';
 
 import '../components/cairosal.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final int id;
   final String image;
   final String title;
@@ -28,17 +28,21 @@ class ProductDetailsPage extends StatelessWidget {
   });
 
   @override
+  _ProductDetailsPageState createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  final List<double> availableSizes = [39, 39.5, 40, 40.5, 41];
+
+  // Use a state variable for the selected size
+  double selectedSize = 39;
+
+  @override
   Widget build(BuildContext context) {
     List<String> imageList = [];
     for (int i = 0; i < 3; i++) {
-      imageList.add(image);
+      imageList.add(widget.image);
     }
-
-    // Example available sizes
-    final List<double> availableSizes = [39, 39.5, 40, 40.5, 41];
-
-    // Selected size state
-    double selectedSize = availableSizes.last;
 
     // Get the screen height
     final screenHeight = MediaQuery.of(context).size.height;
@@ -53,7 +57,7 @@ class ProductDetailsPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite, color: isLiked ? Colors.red : Colors.grey),
+            icon: Icon(Icons.favorite, color: widget.isLiked ? Colors.red : Colors.grey),
             onPressed: () {
               // Add favorite action
             },
@@ -98,7 +102,7 @@ class ProductDetailsPage extends StatelessWidget {
                       children: [
                         // Product Title & Rating
                         Text(
-                          title,
+                          widget.title,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -109,13 +113,13 @@ class ProductDetailsPage extends StatelessWidget {
                         Row(
                           children: [
                             // Rating Stars
-                            Text('${rating.rate}'),
+                            Text('${widget.rating.rate}'),
                             const SizedBox(width: 8),
-                            StarRating(rating:rating.rate.toDouble() ),
+                            StarRating(rating: widget.rating.rate.toDouble()),
 
                             const SizedBox(width: 8),
                             Text(
-                              '(${rating.count} Reviews)',
+                              '(${widget.rating.count} Reviews)',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
@@ -138,9 +142,11 @@ class ProductDetailsPage extends StatelessWidget {
                               label: Text(size.toString()),
                               selected: selectedSize == size,
                               onSelected: (bool selected) {
-                                selectedSize = selected ? size : selectedSize;
+                                setState(() {
+                                  if (selected) selectedSize = size;
+                                });
                               },
-                              selectedColor: Colors.black,
+                              selectedColor: Colors.green,
                               backgroundColor: Colors.grey.shade200,
                               labelStyle: TextStyle(
                                 color: selectedSize == size ? Colors.white : Colors.black,
@@ -160,7 +166,7 @@ class ProductDetailsPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          description,
+                          widget.description,
                           style: TextStyle(
                             color: Colors.grey,
                             height: 1.5,
@@ -204,7 +210,7 @@ class ProductDetailsPage extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       Text(
-                        '\₹${price.toStringAsFixed(2)}',
+                        '\₹${widget.price.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

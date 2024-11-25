@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/navBar.dart';
 import '../components/cairosal.dart';
 import '../components/categoryList.dart';
+import '../data/carsouel.dart';
 import 'product_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,7 +16,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavBar(),
-            ImageCarousel(),
+            ImageCarousel(imageList: imageList,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Text(

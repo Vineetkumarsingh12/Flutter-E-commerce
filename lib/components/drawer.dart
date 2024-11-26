@@ -28,7 +28,6 @@ class customDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
-                    // Using rounded image corners for a softer look
                     // borderRadius: BorderRadius.circular(100),
                     child: Image.asset(
                       'assets/images/company_logo.png',

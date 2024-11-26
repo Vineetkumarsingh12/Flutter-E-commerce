@@ -1,11 +1,14 @@
 import 'dart:ui';
 
+import 'package:ecommerce/components/cartIncrementDecrement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter_rating/flutter_rating.dart';
+import 'package:provider/provider.dart';
 
 import '../components/cairosal.dart';
+import '../providers/cart.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final int id;
@@ -37,8 +40,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   // Use a state variable for the selected size
   double selectedSize = 39;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    // reserach listen:true/false
+
+    final cartProvider = Provider.of<CartProvider>(context);
+    int Count = cartProvider.cart[widget.id] ?? 0;
+
     List<String> imageList = [];
     for (int i = 0; i < 3; i++) {
       imageList.add(widget.image);
@@ -218,9 +229,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                     ],
                   ),
-                  ElevatedButton.icon(
+                  Count==0? ElevatedButton.icon(
                     onPressed: () {
-                      // Add to cart action
+                      cartProvider.addToCart(id: widget.id);
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -233,7 +244,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     icon: Icon(Icons.shopping_cart_outlined),
                     label: Text('Add to cart'),
-                  ),
+                  ):CartIncrementDecrement(id: widget.id) ,
                 ],
               ),
             ),

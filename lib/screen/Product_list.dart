@@ -56,7 +56,7 @@ class _ProductPageState extends State<ProductPage> {
   Future<void> fetchData() async {
     try {
       final ApiService apiService =
-          ApiService(baseUrl: 'https://fakestoreapi.com');
+      ApiService(baseUrl: 'https://fakestoreapi.com');
       final response = await apiService.request(
         endpoint: widget.endpoint,
         method: 'GET',
@@ -67,7 +67,7 @@ class _ProductPageState extends State<ProductPage> {
 
       ///     reserach
       Logger logger = Logger(
-        printer: PrettyPrinter(methodCount: 0, colors: true)
+          printer: PrettyPrinter(methodCount: 0, colors: true)
       );
 
 
@@ -99,36 +99,36 @@ class _ProductPageState extends State<ProductPage> {
       padding: const EdgeInsets.all(16.0),
       child: productData.isEmpty
           ? const Center(
-              child:
-                  CircularProgressIndicator()) // Display a loading indicator while data is being fetched
+          child:
+          CircularProgressIndicator()) // Display a loading indicator while data is being fetched
           : GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              // Allow the grid to fit within the column
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of items per row
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.62, // Adjust to control height/width ratio
-              ),
-              itemCount: productData.length,
-              itemBuilder: (context, index) {
-                final product = productData[index];
-                return ProductCard(
-                  id: product.id,
-                  image: product.image,
-                  title: product.title,
-                  description: product.description,
-                  price: product.price ?? 0.0,
-                  rating: product.rating,
-                  isLiked: Random().nextBool(),
-                  onLikeToggle: () {
-                    // Handle like button toggle
-                    print('Liked product ${product.title}');
-                  },
-                );
-              },
-            ),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        // Allow the grid to fit within the column
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Number of items per row
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.62, // Adjust to control height/width ratio
+        ),
+        itemCount: productData.length,
+        itemBuilder: (context, index) {
+          final product = productData[index];
+          return ProductCard(
+            id: product.id,
+            image: product.image,
+            title: product.title,
+            description: product.description,
+            price: product.price ?? 0.0,
+            rating: product.rating,
+            isLiked: Random().nextBool(),
+            onLikeToggle: () {
+              // Handle like button toggle
+              print('Liked product ${product.title}');
+            },
+          );
+        },
+      ),
     );
   }
 }

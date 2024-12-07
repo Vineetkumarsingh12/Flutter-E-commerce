@@ -2,6 +2,7 @@ import 'package:ecommerce/components/webView.dart';
 import 'package:ecommerce/screen/products.dart';
 import 'package:flutter/material.dart';
 
+import '../screen/authentication/logout.dart';
 import '../screen/profilePage.dart';
 
 class customDrawer extends StatelessWidget {
@@ -138,7 +139,7 @@ class customDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
             onTap: () {
-              // Handle logout logic here
+              logout(context);
             },
           ),
         ],

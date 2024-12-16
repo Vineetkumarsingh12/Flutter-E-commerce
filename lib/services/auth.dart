@@ -1,19 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthService {
-  Future<void> saveCredentials(String email, String password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString('password', password);
+class SharedPrefService {
+  static Future<void> saveUser(String user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', user);
   }
 
-  Future<String?> getSavedEmail() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('email');
+  static Future<String?> getUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user');
   }
 
-  Future<void> clearCredentials() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+  static Future<void> clearUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user');
   }
 }

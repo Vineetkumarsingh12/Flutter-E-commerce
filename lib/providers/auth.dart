@@ -1,28 +1,73 @@
+import 'dart:convert'; // For JSON encoding and decoding
 import 'package:flutter/material.dart';
-
-import '../services/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../data/model/user.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
-  bool _isAuthenticated = false;
+  UserModel? _user;
+  bool _isLoggedIn = false;
 
-  bool get isAuthenticated => _isAuthenticated;
+  UserModel? get user => _user;
+  bool get isLoggedIn => _isLoggedIn;
 
   Future<void> login(String email, String password) async {
-    await _authService.saveCredentials(email, password);
-    _isAuthenticated = true;
-    notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUserJson = prefs.getString('user');
+
+    if (storedUserJson != null) {
+      // Decode the stored JSON string into a Map<String, dynamic>
+      Map<String, dynamic> storedUserMap = jsonDecode(storedUserJson);
+
+      // Convert the Map into a UserModel
+      UserModel savedUser = UserModel.fromJson(storedUserMap);
+
+      // Check if the saved user matches the provided email and password
+      if (savedUser.email == email && savedUser.password == password) {
+        _user = savedUser;
+        _isLoggedIn = true;
+        print("Login successful!");
+        notifyListeners();
+      } else {
+        print("Invalid username or password");
+        throw Exception('Invalid username or password');
+      }
+    } else {
+      throw Exception('User not found');
+    }
   }
 
-  Future<void> checkLoginStatus() async {
-    final email = await _authService.getSavedEmail();
-    _isAuthenticated = email != null;
+
+  Future<void> isLoggedInf()  async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUserJson = prefs.getString('user');
+
+    if(storedUserJson!=null){
+      print("hell******************");
+      _isLoggedIn=true;
+    }
+
+
+  }
+
+  Future<void> signup(String email, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserModel newUser = UserModel(email: email, password: password);
+
+    // Convert the UserModel to JSON string and store it
+    String userJson = jsonEncode(newUser.toJson());
+
+    await prefs.setString('user', userJson);
+    _user = newUser;
+    _isLoggedIn = true;
     notifyListeners();
   }
 
   Future<void> logout() async {
-    await _authService.clearCredentials();
-    _isAuthenticated = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user');
+    _user = null;
+    _isLoggedIn = false;
     notifyListeners();
   }
 }

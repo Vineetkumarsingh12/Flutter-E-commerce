@@ -1,11 +1,31 @@
 import 'package:ecommerce/components/webView.dart';
+import 'package:ecommerce/screen/authentication/login.dart';
 import 'package:ecommerce/screen/products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth.dart';
 import '../screen/profilePage.dart';
 
 class customDrawer extends StatelessWidget {
   const customDrawer({super.key});
+
+  Future<void> _logout(BuildContext context) async {
+    try {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      await authProvider.logout();
+
+      // Clear the navigation stack and navigate to the login page
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+            (route) => false, // This ensures all previous routes are removed from the stack
+      );
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error logging out')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,9 +157,11 @@ class customDrawer extends StatelessWidget {
               'Logout',
               style: TextStyle(color: Colors.black),
             ),
-            onTap: () {
-              // Handle logout logic here
-            },
+            onTap: (){
+              print("##########");
+              _logout(context);
+            }
+
           ),
         ],
       ),

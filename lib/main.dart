@@ -1,5 +1,7 @@
+import 'package:ecommerce/providers/auth.dart';
 import 'package:ecommerce/providers/cart.dart';
 import 'package:ecommerce/screen/layout.dart';
+import 'package:ecommerce/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create:(context)=>CartProvider(),
         ),
+
+        ChangeNotifierProvider(
+          create:(context)=>AuthProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -24,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Layout(),
+        home: Splashh(),
         debugShowCheckedModeBanner: false,
       ),
     );

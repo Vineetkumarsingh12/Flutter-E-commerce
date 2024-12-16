@@ -38,4 +38,18 @@ class DatabaseService {
   Future<void> deleteProduct(int productId) async {
     await _productStore.record(productId).delete(_db);
   }
+
+  // product by id
+  Future<Product> singleProduct(int id) async {
+    // Retrieve the product record using the provided id
+    final productRecord = await _productStore.record(id).get(_db);
+
+    // If the product is found, return it as a Product object
+    if (productRecord != null) {
+      return Product.fromJson(productRecord);  // Ensure Product has a `fromJson` constructor
+    } else {
+      throw Exception('Product with id $id not found.');
+    }
+  }
+
 }

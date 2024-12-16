@@ -1,44 +1,10 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../components/Product_card.dart';
 import '../data/model/product.dart';
 import '../services/api_service.dart';
-
-// Dummy product data to simulate API response
-
-// = [
-//   {
-//     "imageUrl": "assets/images/img_1.png",
-//     "productName": "Axel Arigato",
-//     "description": "Clean 90 Triple Sneakers",
-//     "price": 245.00,
-//     "isLiked": false,
-//   },
-//   {
-//     "imageUrl": "assets/images/img_2.png",
-//     "productName": "Maison Margiela",
-//     "description": "Replica Sneakers",
-//     "price": 530.00,
-//     "isLiked": true,
-//   },
-//   {
-//     "imageUrl": "assets/images/img_4.png",
-//     "productName": "Gia Borghini",
-//     "description": "RHW Rosie 1 Sandals",
-//     "price": 740.00,
-//     "isLiked": false,
-//   },
-//   {
-//     "imageUrl": "assets/images/img_4.png",
-//     "productName": "Gia Borghini",
-//     "description": "RHW Rosie 1 Sandals",
-//     "price": 740.00,
-//     "isLiked": true,
-//   },
-// ];
+import '../services/databaseServices.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.endpoint});
@@ -50,47 +16,59 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<dynamic> productData = [];
+  List<Product> productData = [];
+  final DatabaseService _databaseService = DatabaseService();
 
-  // Fetch data from the API using the endpoint.
-  Future<void> fetchData() async {
+  // Fetch data from the API using the endpoint
+  Future<void> fetchDataFromApi() async {
     try {
-      final ApiService apiService =
-          ApiService(baseUrl: 'https://fakestoreapi.com');
-      final response = await apiService.request(
-        endpoint: widget.endpoint,
-        method: 'GET',
-      );
+      final apiService = ApiService(baseUrl: 'https://fakestoreapi.com');
+      final jsonList = await apiService.request(endpoint: widget.endpoint, method: 'GET');
 
+      Logger().i('API Response: $jsonList');
 
-      final jsonList = response;
-
-      ///     reserach
-      Logger logger = Logger(
-        printer: PrettyPrinter(methodCount: 0, colors: true)
-      );
-
-
-      logger.i('DUMMY: $jsonList' );
+      final fetchedProducts = jsonList.map<dynamic>((json) {
+        try {
+          return Product.fromJson(json);
+        } catch (e) {
+          Logger().e('Error parsing product JSON: $e');
+          return null; // Skip invalid products
+        }
+      }).whereType<Product>().toList();
 
       setState(() {
-        try {
-          productData = jsonList
-              .map((productJson) => Product.fromJson(productJson))
-              .toList();
-        } catch(e) {
-          print("DATA-PARSING-ERROR: ${e.toString()}");
-        }
+        productData = fetchedProducts;
       });
+
+      // Save fetched products to the database
+      for (var product in fetchedProducts) {
+        await _databaseService.insertOrUpdateProduct(product);
+      }
     } catch (e) {
-      print('Error fetching data: $e');
+      Logger().e('Error fetching data: $e');
     }
+  }
+
+  // Fetch data from the local Sembast database
+  Future<void> fetchDataFromDb() async {
+    final productsFromDb = await _databaseService.getAllProducts();
+    setState(() {
+      productData = productsFromDb;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+
+    // Initialize database and fetch data
+    _databaseService.init().then((_) {
+      fetchDataFromDb().then((_) {
+        if (productData.isEmpty) {
+          fetchDataFromApi();
+        }
+      });
+    });
   }
 
   @override
@@ -98,37 +76,33 @@ class _ProductPageState extends State<ProductPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: productData.isEmpty
-          ? const Center(
-              child:
-                  CircularProgressIndicator()) // Display a loading indicator while data is being fetched
+          ? const Center(child: CircularProgressIndicator())
           : GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              // Allow the grid to fit within the column
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of items per row
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.62, // Adjust to control height/width ratio
-              ),
-              itemCount: productData.length,
-              itemBuilder: (context, index) {
-                final product = productData[index];
-                return ProductCard(
-                  id: product.id,
-                  image: product.image,
-                  title: product.title,
-                  description: product.description,
-                  price: product.price ?? 0.0,
-                  rating: product.rating,
-                  isLiked: Random().nextBool(),
-                  onLikeToggle: () {
-                    // Handle like button toggle
-                    print('Liked product ${product.title}');
-                  },
-                );
-              },
-            ),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.62,
+        ),
+        itemCount: productData.length,
+        itemBuilder: (context, index) {
+          final product = productData[index];
+          return ProductCard(
+            id: product.id,
+            image: product.image,
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            rating: product.rating,
+            isLiked: Random().nextBool(),
+            onLikeToggle: () {
+              Logger().i('Liked product: ${product.title}');
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -71,6 +71,10 @@ flutter:
     - assets/images/company_logo.png
     - assets/auth/img_1.png
     - assets/auth/img2.png
+    - assets/payment/googlePay.png
+    - assets/payment/paytm.png
+    - assets/payment/phonepe.png
+
 
 
   

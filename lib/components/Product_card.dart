@@ -163,7 +163,7 @@ class ProductCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CartIncrementDecrement(id:id),
+                  CartIncrementDecrement(id:id,price:price),
                 ],
               ),
             ),

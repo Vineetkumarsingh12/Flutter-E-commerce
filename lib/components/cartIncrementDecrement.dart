@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartIncrementDecrement extends StatefulWidget {
-  CartIncrementDecrement({super.key, required this.id});
+  CartIncrementDecrement({super.key, required this.id, required this.price});
 
   final int id;
+  final num price;
 
   @override
   _CartIncrementDecrementState createState() => _CartIncrementDecrementState();
@@ -56,7 +57,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
       _controller.text = previousValidCount.toString();
     } else {
       // If the value is valid, update the cart and save the new valid count
-      cartProvider.updateCart(id: widget.id, count: newCount);
+      cartProvider.updateCart(id: widget.id, count: newCount,price: widget.price);
       previousValidCount = newCount;
     }
   }
@@ -82,7 +83,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
       child: cartCount == 0
           ? ElevatedButton(
         onPressed: () {
-          cartProvider.addToCart(id: widget.id);
+          cartProvider.addToCart(id: widget.id,price: widget.price);
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
@@ -106,7 +107,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
             height: 40,
             child: IconButton(
               onPressed: () {
-                cartProvider.removeFromCart(id: widget.id);
+                cartProvider.removeFromCart(id: widget.id,price: widget.price);
               },
               icon: const Icon(Icons.remove, color: Colors.black),
               splashRadius: 15,
@@ -143,7 +144,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
                 // Try to parse the value and update cart count if valid
                 int? newCount = int.tryParse(value);
                 if (newCount != null && newCount >= 0 && newCount <= maxCount) {
-                  cartProvider.updateCart(id: widget.id, count: newCount);
+                  cartProvider.updateCart(id: widget.id, count: newCount,price: widget.price);
                   previousValidCount = newCount;
                 } else if (newCount != null && newCount > maxCount) {
                   showSnackBar(
@@ -169,7 +170,7 @@ class _CartIncrementDecrementState extends State<CartIncrementDecrement> {
             child: IconButton(
               onPressed: () {
                 if (cartCount < maxCount) {
-                  cartProvider.addToCart(id: widget.id);
+                  cartProvider.addToCart(id: widget.id,price: widget.price);
                 } else {
                   showSnackBar(
                       context, 'Cannot exceed maximum count of $maxCount.');

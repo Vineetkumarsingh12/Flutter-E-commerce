@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import '../data/model/product.dart';
@@ -21,6 +19,7 @@ class CartTile extends StatefulWidget {
 }
 
 class _CartTileState extends State<CartTile> {
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -55,9 +54,9 @@ class _CartTileState extends State<CartTile> {
               color: Colors.blue,
             ),
           ),
-              subtitle: Text('₹ ${(widget.product.price * widget.quantity).toStringAsFixed(2)}'),
+              subtitle: Text('₹ ${(widget.product.price).toStringAsFixed(2)}'),
               trailing: CartIncrementDecrement(
-                id: widget.product.id,
+                id: widget.product.id, price: widget.product.price
               ),
             ),
           ],

@@ -11,7 +11,7 @@ class Splashh extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    Future.delayed(const Duration(seconds: 30), () async {
+    Future.delayed(const Duration(seconds: 3), () async {
       
       AuthProvider authProvider = Provider.of<AuthProvider>(context, listen: false);
          await authProvider.isLoggedInf();

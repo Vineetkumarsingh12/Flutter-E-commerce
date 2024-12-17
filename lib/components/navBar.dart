@@ -2,6 +2,8 @@ import 'package:ecommerce/providers/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screen/cartPage.dart';
+
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
 
@@ -69,6 +71,11 @@ class NavBar extends StatelessWidget {
                   icon: const Icon(Icons.shopping_cart, color: Colors.black),
                   onPressed: () {
                     // Handle cart button tap here
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CartPage()), // Add 'builder' method to correctly navigate
+                    );
+
                   },
                 ),
               ),

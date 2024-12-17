@@ -49,7 +49,12 @@ class _CartTileState extends State<CartTile> {
                 widget.product.image,
                 fit: BoxFit.contain,
               ),
-              title: Text(widget.product.title),
+          title: Text(
+            widget.product.title,
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ),
               subtitle: Text('₹ ${(widget.product.price * widget.quantity).toStringAsFixed(2)}'),
               trailing: CartIncrementDecrement(
                 id: widget.product.id,

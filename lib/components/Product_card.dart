@@ -5,6 +5,7 @@ import 'package:ecommerce/data/model/product.dart';
 import '../screen/Product_details.dart';
 
 import '../screen/Product_details.dart';
+import 'ImageCache.dart';
 import 'cartIncrementDecrement.dart';
 
 import '../screen/Product_details.dart';
@@ -70,12 +71,19 @@ class ProductCard extends StatelessWidget {
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                     child: Container(
                       color: Colors.white,
-                      child: Image.network(
-                        image,
+                      // child: Image.network(
+                      //   image,
+                      //   fit: BoxFit.contain,
+                      //   errorBuilder: (context, error, stackTrace) => const Center(
+                      //     child: Icon(Icons.error),
+                      //   ),
+                      // ),
+
+
+                    child:  buildCachedNetworkImage(
+                        imageUrl: image,
+                        cacheDurationInDays: 1,
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) => const Center(
-                          child: Icon(Icons.error),
-                        ),
                       ),
                     ),
                   ),

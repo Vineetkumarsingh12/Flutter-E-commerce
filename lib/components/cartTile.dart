@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import '../data/model/product.dart';
 import '../screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
@@ -19,47 +18,85 @@ class CartTile extends StatefulWidget {
 }
 
 class _CartTileState extends State<CartTile> {
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsPage(
-     title: widget.product.title,
-    image:widget.product.image ,
-    rating:widget.product.rating ,
-    description: widget.product.description ,
-    id: widget.product.id ,
-    isLiked: true,
-    price: widget.product.price,
-  )));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+              title: widget.product.title,
+              image: widget.product.image,
+              rating: widget.product.rating,
+              description: widget.product.description,
+              id: widget.product.id,
+              isLiked: true,
+              price: widget.product.price,
+            ),
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Stack(
-          children: [
-            ListTile(
-              leading: Image.network(
-                widget.product.image,
-                fit: BoxFit.contain,
-              ),
-          title: Text(
-            widget.product.title,
-            style: TextStyle(
-              color: Colors.blue,
-            ),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFCE4EC), Color(0xFFE1BEE7)], // Light pink and purple gradient
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-              subtitle: Text('₹ ${(widget.product.price).toStringAsFixed(2)}'),
-              trailing: CartIncrementDecrement(
-                id: widget.product.id, price: widget.product.price
-              ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 6,
+              offset: const Offset(0, 4), // Shadow position
             ),
           ],
+        ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(8.0),
+          leading: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 4,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                widget.product.image,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: Text(
+            widget.product.title,
+            style: const TextStyle(
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          subtitle: Text(
+            '₹ ${(widget.product.price).toStringAsFixed(2)}',
+            style: const TextStyle(
+              color: Colors.black54,
+              fontSize: 14,
+            ),
+          ),
+          trailing: CartIncrementDecrement(
+            id: widget.product.id,
+            price: widget.product.price,
+          ),
         ),
       ),
     );

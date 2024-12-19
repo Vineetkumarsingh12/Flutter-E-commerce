@@ -13,8 +13,7 @@ class CartProvider extends ChangeNotifier {
 
   double totalPrice=0.0;
 
-  // Initialize the cart as an empty map in the constructor
-  CartProvider({Map<int, int>? initialCart}) : cart = initialCart ?? {};
+
 
   CartProvider() {
     _initializeCart();
@@ -67,7 +66,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   // Update a product's quantity in the cart
-  Future<void> updateCart({required int id, required int count}) async {
+  Future<void> updateCart({required int id, required int count,required num price}) async {
     if (count > 0) {
       cart[id] = count;
       await _cartDb.insertOrUpdateProduct(CartItem(id: id, quantity: count));
@@ -75,11 +74,7 @@ class CartProvider extends ChangeNotifier {
       cart.remove(id);
       await _cartDb.deleteProduct(id);
     }
-
-  void updateCart({ required int id, required int count,required num price}){
-
     totalPrice-=(cart[id]??0*price);
-    cart[id]=count;
     totalPrice+=(count*price);
 
     notifyListeners();

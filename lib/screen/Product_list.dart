@@ -22,6 +22,7 @@ class _ProductPageState extends State<ProductPage> {
     productProvider = Provider.of<ProductProvider>(context, listen: false);
     if (!productProvider.isData) {
 
+      Logger().i("vineet1234");
 
       productProvider.getProducts();
     }

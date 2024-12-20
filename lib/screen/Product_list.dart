@@ -1,26 +1,38 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import '../components/Product_card.dart';
-import '../data/model/product.dart';
-import '../services/api_service.dart';
-import '../services/databaseServices.dart';
+import '../providers/product.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key, required this.endpoint});
-
-  final String endpoint;
+  const ProductPage({Key? key}) : super(key: key);
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
+  late ProductProvider productProvider;
 
+  @override
+  void initState() {
+    super.initState();
 
+    productProvider = Provider.of<ProductProvider>(context, listen: false);
+    if (!productProvider.isData) {
+      productProvider.getProducts();
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    final productData = productProvider.products;
+
+    Logger().i("ProductPage: ${productData.length} products");
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: productData.isEmpty

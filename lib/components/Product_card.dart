@@ -9,6 +9,7 @@ import 'cartIncrementDecrement.dart';
 
 import '../screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
+import 'imageCache.dart';
 
 // ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
@@ -70,12 +71,10 @@ class ProductCard extends StatelessWidget {
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                     child: Container(
                       color: Colors.white,
-                      child: Image.network(
-                        image,
+                      child: buildCachedNetworkImage(
+                        imageUrl: image,
+                        cacheDurationInDays: 1,
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) => const Center(
-                          child: Icon(Icons.error),
-                        ),
                       ),
                     ),
                   ),

@@ -43,6 +43,7 @@ dependencies:
   freezed: ^2.5.2
   sembast: ^3.7.1
   path_provider: ^2.1.4
+  cached_network_image: ^3.4.0
 
 dev_dependencies:
   flutter_test:

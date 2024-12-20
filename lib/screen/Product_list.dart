@@ -16,60 +16,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<Product> productData = [];
-  final DatabaseService _databaseService = DatabaseService();
 
-  // Fetch data from the API using the endpoint
-  Future<void> fetchDataFromApi() async {
-    try {
-      final apiService = ApiService(baseUrl: 'https://fakestoreapi.com');
-      final jsonList = await apiService.request(endpoint: widget.endpoint, method: 'GET');
 
-      Logger().i('API Response: $jsonList');
-
-      final fetchedProducts = jsonList.map<dynamic>((json) {
-        try {
-          return Product.fromJson(json);
-        } catch (e) {
-          Logger().e('Error parsing product JSON: $e');
-          return null; // Skip invalid products
-        }
-      }).whereType<Product>().toList();
-
-      setState(() {
-        productData = fetchedProducts;
-      });
-
-      // Save fetched products to the database
-      for (var product in fetchedProducts) {
-        await _databaseService.insertOrUpdateProduct(product);
-      }
-    } catch (e) {
-      Logger().e('Error fetching data: $e');
-    }
-  }
-
-  // Fetch data from the local Sembast database
-  Future<void> fetchDataFromDb() async {
-    final productsFromDb = await _databaseService.getAllProducts();
-    setState(() {
-      productData = productsFromDb;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize database and fetch data
-    _databaseService.init().then((_) {
-      fetchDataFromDb().then((_) {
-        if (productData.isEmpty) {
-          fetchDataFromApi();
-        }
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

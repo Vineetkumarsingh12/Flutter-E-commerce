@@ -1,15 +1,19 @@
 import 'dart:async';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import '../data/model/product.dart';
+import '../data/model/cart.dart';
 
 class DatabaseService {
-  static const String productStore = 'products';
-  late Database _db;
+  static const String productStoreName = 'products';
+  static const String cartStoreName = 'cart';
+  Database? _db;
   late StoreRef<int, Map<String, dynamic>> _productStore;
+  late StoreRef<int, Map<String, dynamic>> _cartStore;
 
-  // Singleton pattern to ensure a single instance of the database
+  // Singleton pattern
   static final DatabaseService _instance = DatabaseService._internal();
   factory DatabaseService() => _instance;
 
@@ -17,39 +21,76 @@ class DatabaseService {
 
   // Initialize the database
   Future<void> init() async {
+    if (_db != null) {
+      Logger().i("Database already initialized");
+      return;
+    }
+
     final appDocDir = await getApplicationDocumentsDirectory();
-    final dbPath = '${appDocDir.path}/product_db.db';
+    final dbPath = '${appDocDir.path}/app_db.db';
     _db = await databaseFactoryIo.openDatabase(dbPath);
-    _productStore = intMapStoreFactory.store(productStore);
+    _productStore = intMapStoreFactory.store(productStoreName);
+    _cartStore = intMapStoreFactory.store(cartStoreName);
+
+    Logger().i("Database initialized with tables: $productStoreName, $cartStoreName");
   }
 
-  // Insert or update a product
+
+  Future<Database> _ensureDbInitialized() async {
+    if (_db == null) {
+      await init();
+    }
+    return _db!;
+  }
+
+  // **Product Operations**
+
   Future<void> insertOrUpdateProduct(Product product) async {
-    await _productStore.record(product.id).put(_db, product.toJson());
+    final db = await _ensureDbInitialized();
+    await _productStore.record(product.id).put(db, product.toJson());
   }
 
-  // Get all products from the database
   Future<List<Product>> getAllProducts() async {
-    final records = await _productStore.find(_db);
+    final db = await _ensureDbInitialized();
+    final records = await _productStore.find(db);
+    Logger().i("Fetched ${records.length} products from the database");
     return records.map((snapshot) => Product.fromJson(snapshot.value)).toList();
   }
 
-  // Delete a product by ID
   Future<void> deleteProduct(int productId) async {
-    await _productStore.record(productId).delete(_db);
+    final db = await _ensureDbInitialized();
+    await _productStore.record(productId).delete(db);
   }
 
-  // product by id
-  Future<Product> singleProduct(int id) async {
-    // Retrieve the product record using the provided id
-    final productRecord = await _productStore.record(id).get(_db);
+  // **Cart Operations**
 
-    // If the product is found, return it as a Product object
-    if (productRecord != null) {
-      return Product.fromJson(productRecord);  // Ensure Product has a `fromJson` constructor
-    } else {
-      throw Exception('Product with id $id not found.');
+  Future<void> insertOrUpdateCartItem(CartItem cartItem) async {
+    final db = await _ensureDbInitialized();
+    await _cartStore.record(cartItem.id).put(db, cartItem.toJson());
+  }
+
+  Future<List<CartItem>> getAllCartItems() async {
+    final db = await _ensureDbInitialized();
+    final records = await _cartStore.find(db);
+    return records.map((snapshot) {
+      final cartItem = CartItem.fromJson(snapshot.value);
+      cartItem.id = snapshot.key;
+      return cartItem;
+    }).toList();
+  }
+
+  Future<void> deleteCartItem(int productId) async {
+    final db = await _ensureDbInitialized();
+    await _cartStore.record(productId).delete(db);
+  }
+
+  Future<void> updateCartItemQuantity(int productId, int quantity) async {
+    final db = await _ensureDbInitialized();
+    final cartItemRecord = await _cartStore.record(productId).get(db);
+    if (cartItemRecord != null) {
+      final updatedCartItem = CartItem.fromJson(cartItemRecord);
+      updatedCartItem.quantity = quantity;
+      await _cartStore.record(productId).put(db, updatedCartItem.toJson());
     }
   }
-
 }

@@ -3,13 +3,12 @@ import 'dart:convert';
 
 
 class ApiService {
-  // Base URL of the API (you can modify this as needed)
+
   final String baseUrl;
 
   // Constructor
   ApiService({required this.baseUrl});
 
-  // Common method to handle HTTP requests
   Future<dynamic> request({
     required String endpoint,
     required String method,
@@ -17,27 +16,26 @@ class ApiService {
     Map<String, dynamic>? queryParameters,
     dynamic body,
   }) async {
-    // Construct the full URL
+
     final Uri url = Uri.parse('$baseUrl$endpoint').replace(queryParameters: queryParameters);
 
-    // Default headers (you can customize them)
+
     final defaultHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
 
-    // Combine provided headers with default headers
     final requestHeaders = headers != null
         ? {...defaultHeaders, ...headers}
         : defaultHeaders;
 
-    // Log request details (optional)
+
     print('Making $method request to: $url');
     print('Headers: $requestHeaders');
     if (body != null) print('Body: $body');
 
     try {
-      // Send the request based on the provided method
+
       http.Response response;
       switch (method.toUpperCase()) {
         case 'GET':

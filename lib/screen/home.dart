@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import '../components/navBar.dart';
 import '../components/cairosal.dart';
 import '../components/categoryList.dart';
@@ -10,6 +11,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Logger().i("********* home Screen **********");
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -38,7 +42,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            ProductPage(endpoint: "/products"), // Use the corrected ProductPage
+            ProductPage(),
           ],
         ),
       ),

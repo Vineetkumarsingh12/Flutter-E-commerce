@@ -10,7 +10,7 @@ class categoryPage extends StatelessWidget {
     return   Scaffold(
       appBar: AppBar(title: Text('$title'),),
       body: SingleChildScrollView(
-        child: ProductPage(),
+        child: ProductPage(category: endpoint,)
       )
     );
   }

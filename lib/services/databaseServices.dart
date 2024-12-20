@@ -7,7 +7,7 @@ import '../data/model/product.dart';
 
 class DatabaseService {
   static const String productStore = 'products';
-  Database? _db; // Made nullable
+  Database? _db;
   late StoreRef<int, Map<String, dynamic>> _productStore;
 
   // Singleton pattern
@@ -16,7 +16,6 @@ class DatabaseService {
 
   DatabaseService._internal();
 
-  // Initialize the database
   Future<void> init() async {
     if (_db == null) {
       final appDocDir = await getApplicationDocumentsDirectory();
@@ -27,7 +26,7 @@ class DatabaseService {
     }
   }
 
-  // Ensure database is initialized before use
+
   Future<Database> _ensureDbInitialized() async {
     if (_db == null) {
       await init();

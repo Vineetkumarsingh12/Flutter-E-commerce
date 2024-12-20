@@ -18,16 +18,17 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
-
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
       productProvider = Provider.of<ProductProvider>(context, listen: false);
       if (!productProvider.isData) {
         productProvider.getProducts();
       }
-
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
     final productData = productProvider.products;
 
     Logger().i("ProductPage: ${productData.length} products");

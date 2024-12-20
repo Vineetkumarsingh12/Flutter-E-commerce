@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 import '../data/model/product.dart';
-import '../providers/product.dart';
 import '../services/api_service.dart';
 import '../services/databaseServices.dart';
 
@@ -17,7 +15,7 @@ class Refresh {
     final jsonList = await apiService.request(endpoint: '/products', method: 'GET');
 
     Logger().i('API Response: $jsonList');
-    List<Product> fetchedProducts = jsonList.map<dynamic>((json) {
+    return jsonList.map<dynamic>((json) {
       try {
         return Product.fromJson(json);
       } catch (e) {
@@ -25,8 +23,6 @@ class Refresh {
         return null;
       }
     }).whereType<Product>().toList();
-
-    return fetchedProducts;
   }
 
   Future<void> insertIntoDb(List<Product> products) async {
@@ -36,10 +32,9 @@ class Refresh {
   }
 
   Future<void> refresh(bool flag) async {
-
-
-    if ( flag == false) {
-      fetchFromApi().then((products) => insertIntoDb(products));
+    if (!flag) {
+      final products = await fetchFromApi();
+      await insertIntoDb(products);
     }
   }
 }

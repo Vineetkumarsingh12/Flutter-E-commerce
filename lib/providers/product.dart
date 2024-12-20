@@ -11,16 +11,19 @@ class ProductProvider extends ChangeNotifier {
   Future<void> getProducts() async {
     Logger().i("Fetching products inside ProductProvider");
 
-
-    await Refresh().refresh(isData);
-
-
-    final dbProducts = await DatabaseService().getAllProducts();
+    await DatabaseService().init();
+    var dbProducts = await DatabaseService().getAllProducts();
     products = dbProducts;
 
-    Logger().i("Products fetched from database: ${products.length}");
-    isData = true;
+    if (dbProducts.isEmpty) {
+      Logger().i("Database is empty, fetching from API");
+      await Refresh().refresh(false);
+      dbProducts = await DatabaseService().getAllProducts();
+      products = dbProducts;
+    }
 
+    Logger().i("Products fetched: ${products.length}");
+    isData = true;
     notifyListeners();
   }
 }

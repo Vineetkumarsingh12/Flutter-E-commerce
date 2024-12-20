@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:ecommerce/screen/productPage.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -42,42 +43,6 @@ class _ProductPageState extends State<ProductPage> {
 
     Logger().i("ProductPage: ${productData.length} products found.");
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: productData.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : LayoutBuilder(
-        builder: (context, constraints) {
-          return GridView.builder(
-            // Set shrinkWrap to true to avoid unbounded height issues
-            shrinkWrap: true,
-            // Disable scrolling of the GridView if inside another scrollable widget
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.62,
-            ),
-            itemCount: productData.length,
-            itemBuilder: (context, index) {
-              final product = productData[index];
-              return ProductCard(
-                id: product.id,
-                image: product.image,
-                title: product.title,
-                description: product.description,
-                price: product.price,
-                rating: product.rating,
-                isLiked: Random().nextBool(),
-                onLikeToggle: () {
-                  Logger().i('Liked product: ${product.title}');
-                },
-              );
-            },
-          );
-        },
-      ),
-    );
+    return  Ppage(productData:productData);
   }
 }

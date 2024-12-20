@@ -21,6 +21,8 @@ class _ProductPageState extends State<ProductPage> {
 
     productProvider = Provider.of<ProductProvider>(context, listen: false);
     if (!productProvider.isData) {
+
+
       productProvider.getProducts();
     }
 
@@ -30,6 +32,8 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
     final productData = productProvider.products;
+
+
 
     Logger().i("ProductPage: ${productData.length} products");
 

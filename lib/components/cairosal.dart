@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'imageCache.dart';
+
 class ImageCarousel extends StatefulWidget {
 
   const ImageCarousel({super.key,required this.imageList});
@@ -43,9 +45,10 @@ class _ImageCarouselState extends State<ImageCarousel> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: Image.network(
-                      imagePath,
-                      fit: BoxFit.contain,
+                    child: buildCachedNetworkImage(
+                      imageUrl: imagePath,
+                      cacheDurationInDays: 1,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 );

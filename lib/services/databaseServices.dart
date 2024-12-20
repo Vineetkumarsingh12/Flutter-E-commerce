@@ -62,6 +62,17 @@ class DatabaseService {
     await _productStore.record(productId).delete(db);
   }
 
+  Future<Product?> singleProduct(int id) async {
+    final db = await _ensureDbInitialized();
+
+    final record = await _productStore.record(id).get(db);
+    if (record != null) {
+      return Product.fromJson(record);
+    }
+    return null;
+  }
+
+
   // **Cart Operations**
 
   Future<void> insertOrUpdateCartItem(CartItem cartItem) async {

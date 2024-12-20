@@ -35,7 +35,7 @@ class _CartPageState extends State<CartPage> {
     productsFuture = Future.wait(
       cartData.entries.map((entry) async {
         final product = await DatabaseService().singleProduct(entry.key);
-        return MapEntry(product, entry.value);
+        return MapEntry(product!, entry.value);
       }),
     );
 

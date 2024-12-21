@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../components/cartTile.dart';
-import '../data/model/product.dart';
 import '../providers/cart.dart';
-import '../services/databaseServices.dart';
+import '../providers/product.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -13,32 +13,14 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  late Future<List<MapEntry<Product, int>>> productsFuture;
-
-  int itemCount = 0;
-
-  // Address field
   String _address = 'Universal trade tower FieldAssist';
   final TextEditingController _addressController = TextEditingController();
 
-  // Payment method selection
   String _selectedPaymentMethod = 'Cash on Delivery';
 
   @override
   void initState() {
     super.initState();
-
-    // Fetch cart data when the widget is initialized
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    final cartData = cartProvider.cart;
-
-    productsFuture = Future.wait(
-      cartData.entries.map((entry) async {
-        final product = await DatabaseService().singleProduct(entry.key);
-        return MapEntry(product!, entry.value);
-      }),
-    );
-
     _addressController.text = _address;
   }
 
@@ -50,30 +32,34 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
       ),
       backgroundColor: Colors.grey[200],
-      body: FutureBuilder<List<MapEntry<Product, int>>>(
-        future: productsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Your cart is empty.'));
+      body: Consumer2<CartProvider, ProductProvider>(
+        builder: (context, cartProvider, productProvider, child) {
+          if (!productProvider.isData) {
+            Logger().i("Fetching products...");
+            productProvider.getProducts();
           }
 
-          final products = snapshot.data!;
-          itemCount = products.length;
+          final cartItems = cartProvider.cart.entries.toList();
+          final totalPrice = cartItems.fold<double>(
+            0.0,
+                (total, entry) {
+              final product = productProvider.products.firstWhere(
+                    (p) => p.id == entry.key,
+                orElse: () => throw Exception("Product not found"),
+              );
+              return total + (product.price * entry.value);
+            },
+          );
+
+          final itemCount = cartItems.fold<int>(0, (sum, entry) => sum + entry.value);
 
           return Column(
             children: [
-              // Cart content
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.all(8.0),
@@ -118,7 +104,7 @@ class _CartPageState extends State<CartPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Total Amount (${itemCount} item${itemCount > 1 ? 's' : ''}): ₹${cartProvider.totalPrice.toStringAsFixed(2)}',
+                              'Total Amount ($itemCount item${itemCount > 1 ? 's' : ''}): ₹${totalPrice.toStringAsFixed(2)}',
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
@@ -206,11 +192,15 @@ class _CartPageState extends State<CartPage> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: products.length,
+                      itemCount: cartItems.length,
                       itemBuilder: (context, index) {
-                        final productEntry = products[index];
-                        final product = productEntry.key;
-                        final quantity = productEntry.value;
+                        final entry = cartItems[index];
+                        final productId = entry.key;
+                        final quantity = entry.value;
+                        final product = productProvider.products.firstWhere(
+                              (p) => p.id == productId,
+                          orElse: () => throw Exception("Product not found"),
+                        );
 
                         return CartTile(product: product, quantity: quantity);
                       },
@@ -219,9 +209,10 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
 
-              // Checkout Button fixed at bottom
+              // Checkout Button
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -234,7 +225,7 @@ class _CartPageState extends State<CartPage> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Add your checkout logic here
+                    // Checkout logic here
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

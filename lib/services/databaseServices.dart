@@ -95,6 +95,11 @@ class DatabaseService {
     await _cartStore.record(productId).delete(db);
   }
 
+  Future<void> deleteAllCartItem() async{
+    final db=await _ensureDbInitialized();
+    await _cartStore.delete(db);
+  }
+
   Future<void> updateCartItemQuantity(int productId, int quantity) async {
     final db = await _ensureDbInitialized();
     final cartItemRecord = await _cartStore.record(productId).get(db);

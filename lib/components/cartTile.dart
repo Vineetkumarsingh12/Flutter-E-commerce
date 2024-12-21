@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/model/product.dart';
 import '../screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
+import 'imageCache.dart';
 
 class CartTile extends StatefulWidget {
   final Product product;
@@ -70,11 +71,10 @@ class _CartTileState extends State<CartTile> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                widget.product.image,
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
+              child:  buildCachedNetworkImage(
+                imageUrl: widget.product.image,
+                cacheDurationInDays: 1,
+                fit: BoxFit.contain,
               ),
             ),
           ),

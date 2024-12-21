@@ -35,14 +35,14 @@ class _SignupScreenState extends State<SignupScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // App Logo or Splash Icon
+
               Image.asset(
                 tSplashTopIcon,
                 height: 120,
               ),
               const SizedBox(height: 20),
 
-              // Email TextField
+
               CustomTextField(
                 controller: emailController,
                 label: 'Email',
@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
               const SizedBox(height: 10),
 
-              // Password TextField
+
               CustomTextField(
                 controller: passwordController,
                 label: 'Password',
@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
               const SizedBox(height: 10),
 
-              // Confirm Password TextField
+
               CustomTextField(
                 controller: confirmPasswordController,
                 label: 'Confirm Password',
@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
               const SizedBox(height: 20),
 
-              // Terms and Conditions Checkbox with Link
+
               Row(
                 children: [
                   Checkbox(
@@ -100,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Navigate to WebView or Open URL
+                            
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -127,7 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
 
-              // Sign-Up Button
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -170,7 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
               const SizedBox(height: 10),
 
-              // Login Redirect Button
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

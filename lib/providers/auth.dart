@@ -66,8 +66,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.remove('user');
     final DatabaseService db=await DatabaseService();
     await db.deleteAllCartItem();
 

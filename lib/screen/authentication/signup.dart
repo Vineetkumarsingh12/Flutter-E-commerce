@@ -1,7 +1,6 @@
 import 'package:ecommerce/screen/authentication/login.dart';
 import 'package:ecommerce/screen/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../components/snackBar.dart';
 import '../../components/textField.dart';

@@ -1,3 +1,4 @@
+import 'package:ecommerce/screen/profilePage.dart';
 import 'package:ecommerce/screen/serach.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -19,7 +20,7 @@ class _LayoutPageState extends State<Layout> {
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
-    Center(child: Text('Profile Page')),
+    ProfilePage(),
   ];
 
   // Method to handle navigation item tap

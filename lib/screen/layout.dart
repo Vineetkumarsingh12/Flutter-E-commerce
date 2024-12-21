@@ -53,12 +53,12 @@ class _LayoutPageState extends State<Layout> {
           ],
         ),
       ),
-      endDrawer:customDrawer() , // Use custom Drawer here
+      endDrawer:customDrawer() ,
       body: _pages[_currentIndex],
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20), // Ensures rounded corners
+          borderRadius: BorderRadius.circular(20),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0), // Blur effect
             child: Container(
@@ -74,7 +74,7 @@ class _LayoutPageState extends State<Layout> {
                 backgroundColor: Colors.transparent, // Keep transparent to show glass effect
                 currentIndex: _currentIndex,
                 onTap: _onItemTapped,
-                elevation: 0, // Remove elevation to keep it flat
+                elevation: 0,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),

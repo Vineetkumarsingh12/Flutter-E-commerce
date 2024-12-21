@@ -6,6 +6,7 @@ class Product {
   final String category;
   final String image;
   final Rating rating;
+   bool like;
 
   Product({
     required this.id,
@@ -15,6 +16,8 @@ class Product {
     required this.category,
     required this.image,
     required this.rating,
+    this.like=false,
+
   });
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +29,7 @@ class Product {
         category: json['category'],
         image: json['image'],
         rating: Rating.fromJson(json['rating']),
+        like:json['like']??false,
       );
 
 
@@ -39,6 +43,7 @@ class Product {
       'image': image,
       'rating': rating.toJson(),
       'category': category,
+      'like':like,
     };
   }
 

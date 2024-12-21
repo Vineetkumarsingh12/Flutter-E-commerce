@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../data/categrory.dart';
-import '../screen/Product_list.dart';
 import '../screen/categoryPage.dart';
 
 class CategoryList extends StatefulWidget {

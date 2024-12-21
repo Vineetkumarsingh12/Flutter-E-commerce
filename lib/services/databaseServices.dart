@@ -13,13 +13,13 @@ class DatabaseService {
   late StoreRef<int, Map<String, dynamic>> _productStore;
   late StoreRef<int, Map<String, dynamic>> _cartStore;
 
-  // Singleton pattern
+  
   static final DatabaseService _instance = DatabaseService._internal();
   factory DatabaseService() => _instance;
 
   DatabaseService._internal();
 
-  // Initialize the database
+  
   Future<void> init() async {
     if (_db != null) {
       Logger().i("Database already initialized");
@@ -43,7 +43,7 @@ class DatabaseService {
     return _db!;
   }
 
-  // **Product Operations**
+  
 
   Future<void> insertOrUpdateProduct(Product product) async {
     final db = await _ensureDbInitialized();
@@ -62,6 +62,25 @@ class DatabaseService {
     await _productStore.record(productId).delete(db);
   }
 
+
+  Future<void> likeProduct(int productId, bool isLike) async {
+    final db = await _ensureDbInitialized();
+
+    var record = await _productStore.record(productId).get(db);
+
+    if(record!=null){
+      var mutableRecord = Map<String, dynamic>.from(record);
+
+
+      mutableRecord['like'] = isLike;
+
+      
+      await _productStore.record(productId).put(db, mutableRecord);
+    }
+
+  }
+
+
   Future<Product?> singleProduct(int id) async {
     final db = await _ensureDbInitialized();
 
@@ -73,7 +92,7 @@ class DatabaseService {
   }
 
 
-  // **Cart Operations**
+  
 
   Future<void> insertOrUpdateCartItem(CartItem cartItem) async {
     final db = await _ensureDbInitialized();

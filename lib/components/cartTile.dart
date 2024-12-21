@@ -1,3 +1,4 @@
+import 'package:ecommerce/services/databaseServices.dart';
 import 'package:flutter/material.dart';
 import '../data/model/product.dart';
 import '../screen/Product_details.dart';
@@ -19,6 +20,15 @@ class CartTile extends StatefulWidget {
 }
 
 class _CartTileState extends State<CartTile> {
+
+  late DatabaseService db;
+
+  @override
+  void initState() {
+    super.initState();
+    db = DatabaseService();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,8 +42,17 @@ class _CartTileState extends State<CartTile> {
               rating: widget.product.rating,
               description: widget.product.description,
               id: widget.product.id,
-              isLiked: true,
+              isLiked: widget.product.like, // Ensure the like status is passed
               price: widget.product.price,
+              onLikeToggle: (int id, bool isLike) async {
+                // Call likeProduct method from the DatabaseService
+                await db.likeProduct(id, isLike);
+
+                // Update the UI after updating the product like status
+                setState(() {
+                  widget.product.like = isLike;
+                });
+              },
             ),
           ),
         );
@@ -71,7 +90,7 @@ class _CartTileState extends State<CartTile> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child:  buildCachedNetworkImage(
+              child: buildCachedNetworkImage(
                 imageUrl: widget.product.image,
                 cacheDurationInDays: 1,
                 fit: BoxFit.contain,

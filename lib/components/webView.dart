@@ -36,7 +36,7 @@ class _CustomWebViewState extends State<CustomWebView> {
           },
         ),
       );
-    // Load the URL only once during initialization
+    
     _controller.loadRequest(Uri.parse(widget.url));
   }
 
@@ -52,7 +52,7 @@ class _CustomWebViewState extends State<CustomWebView> {
         children: [
           WebViewWidget(controller: _controller),
           if (isLoading)
-            const Center(child: CircularProgressIndicator()), // Show loader while loading
+            const Center(child: CircularProgressIndicator()), 
         ],
       ),
     );

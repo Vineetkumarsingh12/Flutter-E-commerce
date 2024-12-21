@@ -54,7 +54,7 @@ class _CategoryListState extends State<CategoryList> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    category['title'],
+                    category['title'][0].toUpperCase()+category['title'].substring(1),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

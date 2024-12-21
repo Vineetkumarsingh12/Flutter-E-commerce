@@ -8,7 +8,7 @@ class categoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return   Scaffold(
-      appBar: AppBar(title: Text('$title'),),
+      appBar: AppBar(title: Text('${title[0].toUpperCase()}${title.substring(1)}'),),
       body: SingleChildScrollView(
         child: ProductPage(category: endpoint,)
       )

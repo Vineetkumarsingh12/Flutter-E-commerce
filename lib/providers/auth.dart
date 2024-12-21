@@ -16,6 +16,7 @@ class AuthProvider extends ChangeNotifier {
     String? storedUserJson = prefs.getString('user');
 
     if (storedUserJson != null) {
+
       // Decode the stored JSON string into a Map<String, dynamic>
       Map<String, dynamic> storedUserMap = jsonDecode(storedUserJson);
 

@@ -12,7 +12,7 @@ class CartProvider extends ChangeNotifier {
 
   final  DatabaseService  _db= DatabaseService();
 
-  double totalPrice=0.0;
+
 
 
 
@@ -41,7 +41,7 @@ class CartProvider extends ChangeNotifier {
 
     }
 
-    totalPrice+=price;
+
     await _db.insertOrUpdateCartItem((CartItem(id: id, quantity: cart[id]!)));
     notifyListeners();
   }
@@ -60,7 +60,7 @@ class CartProvider extends ChangeNotifier {
         await _db.insertOrUpdateCartItem(CartItem(id: id, quantity: cart[id]!));
       }
 
-      totalPrice-=price;
+
       notifyListeners();
     }
   }
@@ -74,8 +74,7 @@ class CartProvider extends ChangeNotifier {
       cart.remove(id);
       await _db.deleteProduct(id);
     }
-    totalPrice-=(cart[id]??0*price);
-    totalPrice+=(count*price);
+
 
     notifyListeners();
   }

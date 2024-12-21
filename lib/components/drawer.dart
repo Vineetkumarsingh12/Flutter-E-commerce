@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import '../providers/cart.dart';
 import '../screen/profilePage.dart';
 
 class customDrawer extends StatelessWidget {
@@ -14,6 +15,8 @@ class customDrawer extends StatelessWidget {
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       await authProvider.logout();
+      final cartProvider=await Provider.of<CartProvider>(context, listen: false);
+      cartProvider.cart={};
 
       // Clear the navigation stack and navigate to the login page
       Navigator.pushAndRemoveUntil(

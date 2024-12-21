@@ -1,4 +1,5 @@
-import 'dart:convert'; // For JSON encoding and decoding
+import 'dart:convert';
+import 'package:ecommerce/services/databaseServices.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/model/user.dart';
@@ -66,6 +67,9 @@ class AuthProvider extends ChangeNotifier {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
+    final DatabaseService db=await DatabaseService();
+    await db.deleteAllCartItem();
+
     _user = null;
     _isLoggedIn = false;
     notifyListeners();

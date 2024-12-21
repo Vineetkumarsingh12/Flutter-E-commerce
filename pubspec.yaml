@@ -43,6 +43,8 @@ dependencies:
   freezed: ^2.5.2
   sembast: ^3.7.1
   path_provider: ^2.1.4
+  cached_network_image: ^3.4.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,10 @@ flutter:
     - assets/images/company_logo.png
     - assets/auth/img_1.png
     - assets/auth/img2.png
+    - assets/payment/googlePay.png
+    - assets/payment/paytm.png
+    - assets/payment/phonepe.png
+
 
 
   

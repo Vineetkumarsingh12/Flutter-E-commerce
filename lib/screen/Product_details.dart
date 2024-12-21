@@ -231,7 +231,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                   Count==0? ElevatedButton.icon(
                     onPressed: () {
-                      cartProvider.addToCart(id: widget.id);
+                      cartProvider.addToCart(id: widget.id,price: widget.price);
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -244,7 +244,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     icon: Icon(Icons.shopping_cart_outlined),
                     label: Text('Add to cart'),
-                  ):CartIncrementDecrement(id: widget.id) ,
+                  ):CartIncrementDecrement(id: widget.id,price: widget.price) ,
                 ],
               ),
             ),

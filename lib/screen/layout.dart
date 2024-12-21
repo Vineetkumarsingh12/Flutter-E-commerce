@@ -1,3 +1,4 @@
+import 'package:ecommerce/screen/serach.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -16,8 +17,8 @@ class _LayoutPageState extends State<Layout> {
 
   // List of pages to navigate
   final List<Widget> _pages = [
-    HomePage(), // Your Home Page
-    Center(child: Text('Search Page')),
+    HomePage(),
+    SearchPage(),
     Center(child: Text('Profile Page')),
   ];
 

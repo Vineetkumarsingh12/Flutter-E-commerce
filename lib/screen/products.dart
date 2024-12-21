@@ -9,7 +9,7 @@ class products extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Products"),),
-      body: SingleChildScrollView(child: ProductPage(endpoint: "/products")),
+      body: SingleChildScrollView(child: ProductPage()),
     );
   }
 }

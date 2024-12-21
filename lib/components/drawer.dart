@@ -18,11 +18,11 @@ class customDrawer extends StatelessWidget {
       final cartProvider=await Provider.of<CartProvider>(context, listen: false);
       cartProvider.cart={};
 
-      // Clear the navigation stack and navigate to the login page
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
-            (route) => false, // This ensures all previous routes are removed from the stack
+            (route) => false,
       );
 
     } catch (e) {

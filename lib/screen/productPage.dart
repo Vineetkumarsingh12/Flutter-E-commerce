@@ -1,14 +1,14 @@
-import 'dart:math';
-
+import 'package:ecommerce/services/databaseServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+
 
 import '../components/Product_card.dart';
 
+
 class Ppage extends StatefulWidget {
   final productData;
-  const Ppage({super.key,required this.productData});
+  const Ppage({super.key, required this.productData});
 
   @override
   State<Ppage> createState() => _PpageState();
@@ -17,6 +17,8 @@ class Ppage extends StatefulWidget {
 class _PpageState extends State<Ppage> {
   @override
   Widget build(BuildContext context) {
+    final DatabaseService productDb = DatabaseService();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: widget.productData.isEmpty
@@ -24,9 +26,7 @@ class _PpageState extends State<Ppage> {
           : LayoutBuilder(
         builder: (context, constraints) {
           return GridView.builder(
-            // Set shrinkWrap to true to avoid unbounded height issues
             shrinkWrap: true,
-            // Disable scrolling of the GridView if inside another scrollable widget
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -44,9 +44,15 @@ class _PpageState extends State<Ppage> {
                 description: product.description,
                 price: product.price,
                 rating: product.rating,
-                isLiked: Random().nextBool(),
-                onLikeToggle: () {
-                  Logger().i('Liked product: ${product.title}');
+                isLiked: product.like,
+                onLikeToggle: (int id, bool isLike) async {
+                  
+                  await productDb.likeProduct(id, isLike);
+
+                  
+                  setState(() {
+                    widget.productData[index].like = isLike;
+                  });
                 },
               );
             },

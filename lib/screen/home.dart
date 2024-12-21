@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            ProductPage(), // Use the corrected ProductPage
+            ProductPage(),
           ],
         ),
       ),

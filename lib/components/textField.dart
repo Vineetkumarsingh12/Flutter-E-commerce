@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  final bool isPasswordField; // Flag for password visibility handling
+  final bool isPasswordField; 
   final String? Function(String?)? validator;
 
   const CustomTextField({
     Key? key,
     required this.controller,
     required this.label,
-    this.isPasswordField = false, // Default to false for non-password fields
+    this.isPasswordField = false, 
     this.validator,
   }) : super(key: key);
 
@@ -24,7 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   void initState() {
     super.initState();
-    _obscureText = widget.isPasswordField; // Initialize based on isPasswordField
+    _obscureText = widget.isPasswordField; 
   }
 
   void _toggleObscureText() {
@@ -37,7 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      obscureText: widget.isPasswordField && _obscureText, // Obscure only if it's a password field
+      obscureText: widget.isPasswordField && _obscureText, 
       decoration: InputDecoration(
         labelText: widget.label,
         border: const OutlineInputBorder(),
@@ -48,7 +48,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           onPressed: _toggleObscureText,
         )
-            : null, // No suffix icon for non-password fields
+            : null, 
       ),
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

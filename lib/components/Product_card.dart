@@ -1,17 +1,9 @@
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce/data/model/product.dart';
-
-import '../screen/Product_details.dart';
-
-import '../screen/Product_details.dart';
-import 'cartIncrementDecrement.dart';
-
-import '../screen/Product_details.dart';
+import 'package:ecommerce/screen/Product_details.dart';
 import 'cartIncrementDecrement.dart';
 import 'imageCache.dart';
 
-// ProductCard widget to display a single product's details
 class ProductCard extends StatelessWidget {
   final int id;
   final String image;
@@ -20,10 +12,9 @@ class ProductCard extends StatelessWidget {
   final num price;
   final Rating rating;
   final bool isLiked;
-  final VoidCallback onLikeToggle;
+  final Function(int, bool) onLikeToggle;
 
   const ProductCard({
-
     super.key,
     required this.id,
     required this.image,
@@ -51,6 +42,8 @@ class ProductCard extends StatelessWidget {
               price: price,
               rating: rating,
               isLiked: isLiked,
+              onLikeToggle: onLikeToggle,
+
             ),
           ),
         );
@@ -87,7 +80,7 @@ class ProductCard extends StatelessWidget {
                       isLiked ? Icons.favorite : Icons.favorite_border,
                       color: isLiked ? Colors.red : Colors.white,
                     ),
-                    onPressed: onLikeToggle,
+                    onPressed: () => onLikeToggle(id, !isLiked),
                     splashRadius: 20,
                     iconSize: 24,
                   ),
@@ -156,13 +149,12 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-
             Padding(
-              padding: const EdgeInsets.only(top:3,bottom: 0),
+              padding: const EdgeInsets.only(top: 3, bottom: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CartIncrementDecrement(id:id,price:price),
+                  CartIncrementDecrement(id: id, price: price),
                 ],
               ),
             ),

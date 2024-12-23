@@ -63,3 +63,17 @@ This application is designed to provide a smooth shopping experience with robust
 - Add AI-based product recommendations.  
 - Include push notifications for offers and updates.  
 - Expand product categories and filter options.
+
+  
+![WhatsApp Image 2024-12-23 at 21 34 14_8e0e16fc](https://github.com/user-attachments/assets/c7bdeb1d-02af-4fce-8c9f-ff4a3e4ae1f3)
+
+
+![WhatsApp Image 2024-12-23 at 21 34 14_453f2c00](https://github.com/user-attachments/assets/dce12749-9609-4cd6-af01-c714139d9fd3)
+
+![WhatsApp Image 2024-12-23 at 21 34 13_1f88ccbb](https://github.com/user-attachments/assets/41b6fdf8-ef1c-4d2a-8703-555c58e120ac)
+
+![WhatsApp Image 2024-12-23 at 21 34 13_e44b92b3](https://github.com/user-attachments/assets/c6fbd7f5-59a3-4ac3-a0fe-f8e367f5e914)
+
+![WhatsApp Image 2024-12-23 at 21 34 13_a2f0cfbf](https://github.com/user-attachments/assets/59d004ca-13ed-4e4b-a9c2-d90aaf15c2d6)
+
+

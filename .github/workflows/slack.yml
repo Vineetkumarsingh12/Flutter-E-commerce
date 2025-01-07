@@ -37,7 +37,7 @@ jobs:
       - name: 'Build Debug Apk'
         run: flutter build apk  --release --split-per-abi
 
-      - name: "Post APK to Slack"
+      - name: "Post APK To Slack"
         id: pingSlack
         uses: FieldAssist/slack-share@v0.1.5
         with:

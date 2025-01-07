@@ -39,7 +39,7 @@ jobs:
 
       - name: "Post APK to Slack"
         id: pingSlack
-        uses: FieldAssist/slack-share@v0.1.4
+        uses: FieldAssist/slack-share@v0.1.5
         with:
           SLACK_TOKEN: ${{ secrets.TOKEN }}
           SLACK_CHANNEL: 'D087DAZRC2F'

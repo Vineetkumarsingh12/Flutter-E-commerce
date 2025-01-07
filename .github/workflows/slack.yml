@@ -42,7 +42,7 @@ jobs:
         uses: FieldAssist/slack-share@v0.1.5
         with:
           SLACK_TOKEN: ${{ secrets.TOKEN }}
-          SLACK_CHANNEL: 'D087DAZRC2F'
+          SLACK_CHANNEL: 'C087NC7SVLK'
           SHARE_FILE: true
           FILE_PATH: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
           SLACK_MESSAGE: |

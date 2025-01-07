@@ -3,7 +3,8 @@ import '../components/navBar.dart';
 import '../components/cairosal.dart';
 import '../components/categoryList.dart';
 import '../data/carsouel.dart';
-import 'product_list.dart';
+import 'Product_list.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

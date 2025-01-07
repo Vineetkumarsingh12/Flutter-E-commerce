@@ -44,6 +44,6 @@ jobs:
           SLACK_TOKEN: ${{ secrets.TOKEN }}
           SLACK_CHANNEL: 'D087DAZRC2F'
           SHARE_FILE: true
-          FILE_PATH: build/app/outputs/flutter-apk/app-release.apk
+          FILE_PATH: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
           SLACK_MESSAGE: |
             Trigger by: @${{ github.actor }}

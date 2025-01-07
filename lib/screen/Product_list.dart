@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:ecommerce/screen/productPage.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import '../components/Product_card.dart';
 import '../providers/product.dart';
 
 class ProductPage extends StatefulWidget {

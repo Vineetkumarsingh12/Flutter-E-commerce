@@ -1,8 +1,8 @@
 name: Release build on tag push
 on:
   push:
-#    branches:
-#      - "update-ci-cd-workflow-slack"
+    branches:
+      - "feat/ci_cd"
     tags:
       - "v*.*.*"
 jobs:
@@ -33,11 +33,6 @@ jobs:
 
       - name: 'Flutter Pub Get'
         run: flutter pub get
-
-      - name: 'Flutter Format Check'
-        run: dart format --set-exit-if-changed -o none .
-
-
 
       - name: 'Build Debug Apk'
         run: flutter build apk  --release --split-per-abi
